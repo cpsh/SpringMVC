@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +8,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>hello</title>
+    
+    <title>404</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -19,26 +19,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<!-- 在 -servlet.xml中配置了springmvc对于静态资源的访问 -->
-    <script type="text/javascript" src="res/js/jquery-1.7.2.js"></script>
-    <script type="text/javascript">
-    function ajax(){
-    	alert("ccc");
-    	$.ajax({
-            type: 'post',
-            //data: $('#form').serialize() + getSource() + license,
-            url: "http://localhost:8080/hello/ok",
-            //dataType: 'json',
-            success: function(data) {
-                alert(data);
-            }
-        })
-    }
-    </script>
+
   </head>
   
   <body>
-    hello world,qqqq! <br>
-    <button onclick="ajax();">ajax</button>
+    <%
+	Exception e = (Exception)request.getAttribute("exception");
+	out.print(e.getMessage());
+	%>
   </body>
 </html>
