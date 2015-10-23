@@ -41,7 +41,7 @@ public class PersonService implements IServPerson{
     }
     
     public void start() {
-        System.out.println("service 初始化");
+        System.out.println("Server启动时，Personservice 初始化--------------------------------------");
     }
     
     
