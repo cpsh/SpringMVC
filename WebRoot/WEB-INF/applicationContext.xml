@@ -53,5 +53,8 @@
 	
 	<!--     Bean配置    -->
      <import resource="applicationContext-beans.xml"/>
+	 
+	 <!-- activeMQ配置 -->
+     <import resource="applicationContext-activemq.xml"/>
      
 </beans>
