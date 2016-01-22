@@ -39,7 +39,8 @@ private String user = ActiveMQConnection.DEFAULT_USER;
                 user, password, url);     
         connection = connectionFactory.createConnection();     
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);     
-        destination = session.createQueue(subject);     
+        //destination = session.createQueue(subject);
+        destination = session.createTopic(subject); 
         producer = session.createProducer(destination);     
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);     
     }     

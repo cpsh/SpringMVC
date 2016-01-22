@@ -47,7 +47,8 @@ public class ConsumerTool implements MessageListener {
         // 是生产和消费的一个单线程上下文。会话用于创建消息的生产者，消费者和消息。会话提供了一个事务性的上下文。
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE); // 不支持事务
         // 目的地是客户用来指定他生产消息的目标还有他消费消息的来源的对象，两种消息传递方式：点对点和发布/订阅
-        destination = session.createQueue(subject);
+       // destination = session.createQueue(subject);
+        destination = session.createTopic(subject); //发布订阅
         // 会话创建消息的生产者将消息发送到目的地
         consumer = session.createConsumer(destination);
 
@@ -57,16 +58,30 @@ public class ConsumerTool implements MessageListener {
     public void consumeMessage() throws JMSException, Exception {
         initialize();
         connection.start();
-
-        System.out.println("Consumer:->Begin listening...");
-        // 开始监听
-        consumer.setMessageListener(this);
-        // Message message = consumer.receive();
-
+        
         /*
          * 如果想主动的去接受消息，而不用消息监听的话，把consumer.setMessageListener(this)改为Message
          * message = consumer.receive()，手动去调用MessageConsumer的receive方法即可
          */
+        System.out.println("Consumer:->Begin listening...");
+        // 开始监听
+         consumer.setMessageListener(this);
+        
+         /*Message message = consumer.receive();
+         try {
+             if (message instanceof TextMessage) {
+                 TextMessage txtMsg = (TextMessage) message;
+                 String msg = txtMsg.getText();
+                 System.out.println("Consumer:->Received: " + msg);
+             } else {
+                 System.out.println("Consumer:->Received: " + message);
+             }
+         } catch (JMSException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         }*/
+
+        
     }
 
     // 关闭连接

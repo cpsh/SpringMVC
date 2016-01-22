@@ -17,10 +17,14 @@ public class Test {
         // 开始监听     
         consumer.consumeMessage();     
              
+        
+        
         // 延时500毫秒之后发送消息     
         Thread.sleep(500);     
         producer.produceMessage("Hello, world!");     
-        producer.close();     
+        producer.close();    
+       
+//        consumer.consumeMessage();
              
         // 延时500毫秒之后停止接受消息     
         Thread.sleep(500);     
