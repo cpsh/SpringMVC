@@ -8,7 +8,6 @@ public class LoggerUtil {
     private static Logger infoLogger = null ;
     private static Logger warnLogger = null ;
     private static Logger errorLogger = null ;
-    private static Logger searchCarDebugLog = null;
 
     static{
         debugLogger = Logger.getLogger("debugLog");

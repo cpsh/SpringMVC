@@ -3,30 +3,42 @@ package com.cpsh.activeMQ.example2;
 import javax.jms.JMSException;     
 
 import org.apache.activemq.ActiveMQConnection;  
-/*import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;*/
+import org.apache.log4j.xml.DOMConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.log4j.Logger;
-
+import com.cpsh.utils.Log4jXMLConfig;
 import com.cpsh.utils.LoggerUtil;
     
-public class Test {     
-//    private static Logger logger = LoggerFactory.getLogger(Test.class);
-//    private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Test.class);
+public class Test {   
+    /*
+     * 通过获取LoggerName方式,获取的Logger对象只会输出该LoggerName对应级别所配置的所有级别日志
+     * org.slf4j.Logger    --> Logger logger =loggerFactory.getLogger(LoggerName)
+     * commons.logging.Log --> Log logger = LogFactory.getLog(LoggerName)
+     * 
+     * 通过xml中配置LoggerName为class对应的包名，可以将各个包中的类日志输出到不同的日志文件中
+     * LoggerFactory.getLogger(Test.class)
+     */
     
-    private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Test.class);
-//    private static Logger infoLogger = Logger.getLogger("info");
+//    private static Log logger = LogFactory.getLog("warn_logger");
+  //  Log logger = LogFactory.getLog("debug_logger");
     
-    /**   
-     * @param args   
-     */    
+    private static Logger logger ; 
+    static{
+        Log4jXMLConfig.initia();//加载log4j.xml文件配置
+        logger = LoggerFactory.getLogger(Test.class);
+    }
     public static void main(String[] args) throws JMSException, Exception {     
-       LoggerUtil.info("开始测试ActiveMQ消息队列.......................");//log4j.properties生效
-       LoggerUtil.debug("开始测试ActiveMQ消息队列.......................");//log4j.properties生效
-       LoggerUtil.error("开始测试ActiveMQ消息队列.......................");//log4j.properties生效
-       LoggerUtil.warn("开始测试ActiveMQ消息队列.......................");//log4j.properties生效
+       logger.error(".xml:开始测试ActiveMQ消息队列.......................");
+       logger.warn(".xml:开始测试ActiveMQ消息队列.......................");
+       logger.info(".xml:开始测试ActiveMQ消息队列.......................");
+       logger.debug(".xml:开始测试ActiveMQ消息队列.......................");
        
-       logger.info("开始测试ActiveMQ消息队列.......................");
+       LoggerUtil.info(".properties:开始测试ActiveMQ消息队列.......................");
+       LoggerUtil.debug(".properties:开始测试ActiveMQ消息队列.......................");
+       LoggerUtil.error(".properties:开始测试ActiveMQ消息队列.......................");
+       LoggerUtil.warn(".properties:开始测试ActiveMQ消息队列.......................");
+       
        
      // TODO Auto-generated method stub     
         ConsumerTool consumer = new ConsumerTool();     
