@@ -1,5 +1,7 @@
 package com.cpsh.activeMQ.example2;
 
+import java.util.Date;
+
 import javax.jms.Connection;     
 import javax.jms.DeliveryMode;     
 import javax.jms.Destination;     
@@ -8,8 +10,11 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;     
 import javax.jms.TextMessage;     
     
+
 import org.apache.activemq.ActiveMQConnection;     
 import org.apache.activemq.ActiveMQConnectionFactory; 
+
+import com.cpsh.utils.DateUtil;
 
 /**
  * ProducerTool.java用于发送消息：
@@ -48,9 +53,9 @@ private String user = ActiveMQConnection.DEFAULT_USER;
     // 发送消息     
     public void produceMessage(String message) throws JMSException, Exception {     
         initialize();     
-        TextMessage msg = session.createTextMessage(message);     
+        TextMessage msg = session.createTextMessage(message);    
         connection.start();     
-        System.out.println("Producer:->Sending message: " + message);     
+        System.out.println("Producer:->Sending message: " + message +" , time : "+DateUtil.getFormattedDateString(new Date(),"yyyy-MM-dd HH:mm:ss SSS"));     
         producer.send(msg);     
         System.out.println("Producer:->Message sent complete!");     
     }     

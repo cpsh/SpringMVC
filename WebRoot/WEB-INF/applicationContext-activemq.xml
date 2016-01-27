@@ -22,6 +22,10 @@
         <property name="connectionFactory">
             <ref bean="connectionFactory"/>
         </property>
+        <!-- receiveTimeout : 接收消息时的超时时间 ,如果不设置的话，加入接收消息时是阻塞着的，那么将一直阻塞下去 -->
+        <property name="receiveTimeout" value="10000" />
+        
+<!--         <property name="defaultDestination" ref="Queue1" /> -->
     </bean>
     <bean id="Queue1" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg index="0">

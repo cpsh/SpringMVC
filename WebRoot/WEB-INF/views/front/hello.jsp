@@ -23,11 +23,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="res/js/jquery-1.7.2.js"></script>
     <script type="text/javascript">
     function ajax(){
-    	alert("ccc");
+    	alert("ajax调用");
     	$.ajax({
             type: 'post',
             //data: $('#form').serialize() + getSource() + license,
-            url: "http://localhost:8080/hello/ok",
+            url: "http://localhost:8080/hello/ajax",
             //dataType: 'json',
             success: function(data) {
                 alert(data);

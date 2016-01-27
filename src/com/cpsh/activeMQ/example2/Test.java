@@ -41,23 +41,34 @@ public class Test {
        
        
      // TODO Auto-generated method stub     
-        ConsumerTool consumer = new ConsumerTool();     
+        ConsumerTool consumer = new ConsumerTool();   
+        ConsumerTool2 consumer2 = new ConsumerTool2();
+        
         ProducerTool producer = new ProducerTool();    
         System.out.println(ActiveMQConnection.DEFAULT_BROKER_URL+"------------");  
         // 开始监听     
-        consumer.consumeMessage();     
+        consumer.consumeMessage();
+        consumer2.consumeMessage();
              
         
         
         // 延时500毫秒之后发送消息     
         Thread.sleep(500);     
-        producer.produceMessage("Hello, world!");     
-        producer.close();    
-       
-//        consumer.consumeMessage();
+        producer.produceMessage("Hello, world!");   
+        producer.close();  
+        
+        System.out.println();
+        
+        
+//        consumer.consumeMessage(); //手动接受消息 Message message = consumer.receive();
              
         // 延时500毫秒之后停止接受消息     
         Thread.sleep(500);     
-        consumer.close();     
+        consumer.close();
+        
+        System.out.println();
+        
+        Thread.sleep(500);     
+        consumer2.close(); 
     }     
 }   

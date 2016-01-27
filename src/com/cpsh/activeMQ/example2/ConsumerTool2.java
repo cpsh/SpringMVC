@@ -23,7 +23,7 @@ import com.cpsh.utils.DateUtil;
  * @author Administrator
  * 
  */
-public class ConsumerTool implements MessageListener {
+public class ConsumerTool2 implements MessageListener {
 
     private String user = ActiveMQConnection.DEFAULT_USER;
 
@@ -67,7 +67,7 @@ public class ConsumerTool implements MessageListener {
          * 如果想主动的去接受消息，而不用消息监听的话，把consumer.setMessageListener(this)改为Message
          * message = consumer.receive()，手动去调用MessageConsumer的receive方法即可
          */
-        System.out.println("Consumer:->Begin listening...");
+        System.out.println("Consumer2:->Begin listening...");
         // 开始监听
          consumer.setMessageListener(this);
         
@@ -90,7 +90,7 @@ public class ConsumerTool implements MessageListener {
 
     // 关闭连接
     public void close() throws JMSException {
-        System.out.println("Consumer:->Closing connection");
+        System.out.println("Consumer2:->Closing connection");
         if (consumer != null)
             consumer.close();
         if (session != null)
@@ -105,10 +105,10 @@ public class ConsumerTool implements MessageListener {
             if (message instanceof TextMessage) {
                 TextMessage txtMsg = (TextMessage) message;
                 String msg = txtMsg.getText();
-//                System.out.println("Consumer:->Received: " + msg +" , time : "+DateUtil.getFormattedDateString(new Date()));
+//                System.out.println("Consumer2:->Received: " + msg +" , time : "+ System.currentTimeMillis());
                 System.out.println("Consumer2:->Received: " + msg +" , time : "+DateUtil.getFormattedDateString(new Date(),"yyyy-MM-dd HH:mm:ss SSS"));
             } else {
-                System.out.println("Consumer:->Received: " + message);
+                System.out.println("Consumer2:->Received: " + message);
             }
         } catch (JMSException e) {
             // TODO Auto-generated catch block
