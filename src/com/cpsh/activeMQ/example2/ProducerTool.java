@@ -11,6 +11,8 @@ import javax.jms.Session;
 import javax.jms.TextMessage;     
     
 
+import javax.jms.Topic;
+
 import org.apache.activemq.ActiveMQConnection;     
 import org.apache.activemq.ActiveMQConnectionFactory; 
 
@@ -28,7 +30,7 @@ private String user = ActiveMQConnection.DEFAULT_USER;
     
     private String url = ActiveMQConnection.DEFAULT_BROKER_URL;     
     
-    private String subject = "TOOL.DEFAULT";     
+    private String subject = "example2";     
     
     private Destination destination = null;     
     

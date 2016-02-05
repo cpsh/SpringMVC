@@ -31,7 +31,7 @@ public class ConsumerTool2 implements MessageListener {
 
     private String url = ActiveMQConnection.DEFAULT_BROKER_URL;
 
-    private String subject = "TOOL.DEFAULT";
+    private String subject = "example2";
 
     private Destination destination = null;
 

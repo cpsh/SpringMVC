@@ -31,7 +31,7 @@ public class ConsumerTool implements MessageListener {
 
     private String url = ActiveMQConnection.DEFAULT_BROKER_URL;
 
-    private String subject = "TOOL.DEFAULT";
+    private String subject = "example2";
 
     private Destination destination = null;
 
@@ -106,7 +106,7 @@ public class ConsumerTool implements MessageListener {
                 TextMessage txtMsg = (TextMessage) message;
                 String msg = txtMsg.getText();
 //                System.out.println("Consumer:->Received: " + msg +" , time : "+DateUtil.getFormattedDateString(new Date()));
-                System.out.println("Consumer2:->Received: " + msg +" , time : "+DateUtil.getFormattedDateString(new Date(),"yyyy-MM-dd HH:mm:ss SSS"));
+                System.out.println("Consumer:->Received: " + msg +" , time : "+DateUtil.getFormattedDateString(new Date(),"yyyy-MM-dd HH:mm:ss SSS"));
             } else {
                 System.out.println("Consumer:->Received: " + message);
             }

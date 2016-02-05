@@ -54,7 +54,8 @@ public class Test {
         
         // 延时500毫秒之后发送消息     
         Thread.sleep(500);     
-        producer.produceMessage("Hello, world!");   
+        producer.produceMessage("Hello, world!");  
+        producer.produceMessage("this is my ActiveMQ example!");
         producer.close();  
         
         System.out.println();
