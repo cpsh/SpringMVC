@@ -39,6 +39,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     hello world,qqqq! <br>
+    model and view - a : ${a}<br>
+    model and view - message : ${message}<br>
+    model and view - param username : ${username}<br>
     <button onclick="ajax();">ajax</button>
   </body>
 </html>

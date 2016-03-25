@@ -45,6 +45,14 @@ private String user = ActiveMQConnection.DEFAULT_USER;
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(     
                 user, password, url);     
         connection = connectionFactory.createConnection();     
+        /* 
+         *    创建session：第一个参数表示是否采用事务消息，
+         *    true表示是，消息提交由commit处理，回滚由rollback处理；
+         *    false表示不是：
+         *      1.Session.AUTO_ACKNOWLEDGE    : session会自动确认接收到的消息
+         *      2.Session.CLIENT_ACKNOWLEDGE  : 由客户端程序通过消息的确认方法来确认所收到的消息
+         *      3.Session.DUPS_OK_ACKNOWLEDGE : session懒惰，不会立即确认消息，可能导致消息重复投递。
+         */
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);     
         //destination = session.createQueue(subject);
         destination = session.createTopic(subject); 
