@@ -1,12 +1,19 @@
 package com.cpsh.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -23,6 +30,21 @@ import com.cpsh.utils.ParamUtil;
 @Controller
 public class HelloAction {
 
+    @NumberFormat(style=Style.NUMBER,pattern="#,###")
+    private int totalcount;
+    
+    @NumberFormat(style=Style.CURRENCY)
+    private double sumMoney;
+    
+    @NumberFormat(style=Style.PERCENT)
+    private double discount;
+    
+    @DateTimeFormat(iso=ISO.DATE)
+    private Date registerDate;
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date orderDate;
+    
     @RequestMapping(value = "/hello/")
     public String hello() {
 
@@ -34,10 +56,9 @@ public class HelloAction {
     @RequestMapping(value = "/hello/forward/")
     public String forwardURL() {
         System.out.println("进入HelloAction。。。开始Action转发");
-        return "forward:/forward/"; 
+        return "forward:/forward/";
     }
-    
-    
+
     @RequestMapping(value = "/hello/redirect/")
     public String redirectURL(HttpServletRequest request) {
         System.out.println("进入HelloAction。。。开始Action重定向");
@@ -49,56 +70,57 @@ public class HelloAction {
          * web.xml配置listener方式
          */
         ServletContext sc = request.getServletContext();
-        WebApplicationContext attr1 = WebApplicationContextUtils.getWebApplicationContext(sc);
-        
-        return "redirect:/index.jsp"; 
+        WebApplicationContext attr1 = WebApplicationContextUtils
+                .getWebApplicationContext(sc);
+
+        return "redirect:/index.jsp";
     }
-    
+
     @RequestMapping(value = "/hello1/")
     public ModelAndView hello1(Model model) {
         System.out.println("model and view");
-        //1、收集参数  
-        //2、绑定参数到命令对象  
-        //3、调用业务对象  
-        //4、选择下一个页面  
-        model.addAttribute("a", "a");//①添加模型数据  
-        ModelAndView mv = new ModelAndView();  
-        mv.addObject("a", "update");//②在视图渲染之前更新③处同名模型数据
-        //添加模型数据 可以是任意的POJO对象  
-        mv.addObject("message", " model and view");  
-        //设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面  
-        mv.setViewName("front/hello");  
-        return mv ;
+        // 1、收集参数
+        // 2、绑定参数到命令对象
+        // 3、调用业务对象
+        // 4、选择下一个页面
+        model.addAttribute("a", "a");// ①添加模型数据
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("a", "update");// ②在视图渲染之前更新③处同名模型数据
+        // 添加模型数据 可以是任意的POJO对象
+        mv.addObject("message", " model and view");
+        // 设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面
+        mv.setViewName("front/hello");
+        return mv;
     }
-    
-    @RequestMapping(value = "/hello2/{id}/{cityPinYin:[a-z]+[0-9]?}",params="username")
-    public String hello2(@PathVariable String id,@PathVariable String cityPinYin,@RequestParam String username,Model model,ModelMap modelMap,Map map) {
+
+    @RequestMapping(value = "/hello2/{id}/{cityPinYin:[a-z]+[0-9]?}", params = "username")
+    public String hello2(@PathVariable String id,
+            @PathVariable(value = "cityPinYin") String cityPinYin2,
+            @RequestParam String username, Model model, ModelMap modelMap,
+            Map map) {
         System.out.println("id = " + id);
-        System.out.println("cityPinYin = "+cityPinYin);
-        model.addAttribute("message", "model attribute");
-        modelMap.put("message", "model attribute");
-        map.put("message", "model attribute");
-        
-        System.out.println(model == modelMap);  
-        System.out.println(modelMap == map); 
-        
+        System.out.println("cityPinYin = " + cityPinYin2);
+        model.addAttribute("message", "model attribute @PathVariable");
+        modelMap.put("message", "model attribute @PathVariable new");
+        map.put("message", "model attribute @PathVariable last");// model.modelMap,map三者为同一对象，覆盖同名
+
+        System.out.println(model == modelMap);// true
+        System.out.println(modelMap == map);// true
         return "front/hello";
     }
-    
+
     @RequestMapping(value = "/hello3/")
-    public String hello3(@RequestParam("username") String username1,Model model) {
+    public String hello3(@RequestParam("username") String username1, Model model) {
         System.out.println("param username = " + username1);
         model.addAttribute("username", username1);
         return "front/hello";
     }
-    
-    
     /**
      * 处理ajax请求
      * 
      * 包含下面两个jar包。spring的配置文件开启<mvc:annotation-driven/>,使用spring的内置json准换
-     * jackson-core-asl-1.7.2.jar
-       jackson-mapper-asl-1.7.2.jar
+     * jackson-core-asl-1.7.2.jar jackson-mapper-asl-1.7.2.jar
+     * 
      * @return
      */
     @RequestMapping(value = "/hello/ok")
@@ -119,7 +141,7 @@ public class HelloAction {
         return list;
 
     }
-    
+
     @RequestMapping(value = "/hello/exception")
     public void exception() {
         try {
@@ -128,7 +150,5 @@ public class HelloAction {
             e.printStackTrace();
         }
     }
-    
-    
 
 }
