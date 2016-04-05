@@ -7,8 +7,11 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -17,34 +20,44 @@ import org.springframework.format.annotation.NumberFormat.Style;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cpsh.model.Person;
 import com.cpsh.utils.ParamUtil;
 
 @Controller
 public class HelloAction {
 
-    @NumberFormat(style=Style.NUMBER,pattern="#,###")
+    /**
+     * 内建格式化转换器
+     */
+    @NumberFormat(style = Style.NUMBER, pattern = "#,###")
     private int totalcount;
-    
-    @NumberFormat(style=Style.CURRENCY)
+
+    /**
+     * 指定字段不允许为null,验证失败则从之前指定的messageSource中获取 消息内容
+     */
+    @NumberFormat(style = Style.CURRENCY)
+    @NotNull(message = "{sumMoney can not be null!}")
     private double sumMoney;
-    
-    @NumberFormat(style=Style.PERCENT)
+
+    @NumberFormat(style = Style.PERCENT)
     private double discount;
-    
-    @DateTimeFormat(iso=ISO.DATE)
+
+    @DateTimeFormat(iso = ISO.DATE)
     private Date registerDate;
-    
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date orderDate;
-    
+
     @RequestMapping(value = "/hello/")
     public String hello() {
 
@@ -109,12 +122,14 @@ public class HelloAction {
         return "front/hello";
     }
 
-    @RequestMapping(value = "/hello3/")
-    public String hello3(@RequestParam("username") String username1, Model model) {
+    @RequestMapping(value = "/hello3/", method = { RequestMethod.PUT })
+    public String hello3(@RequestParam("username") String username1,
+            Model model, @Valid @ModelAttribute("user") Person person) {
         System.out.println("param username = " + username1);
         model.addAttribute("username", username1);
         return "front/hello";
     }
+
     /**
      * 处理ajax请求
      * 
