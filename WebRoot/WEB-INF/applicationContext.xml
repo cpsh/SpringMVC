@@ -12,41 +12,10 @@
 	xmlns:task="http://www.springframework.org/schema/task">
 
     <!-- 数据库链接池配置 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
-		<property name="driverClass">
-			<value>com.mysql.jdbc.Driver</value>
-		</property>
-		<property name="jdbcUrl">
-			<value>jdbc:mysql://192.168.2.25/51auto_v4?user=root&amp;password=51auto_v4&amp;useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=gbk&amp;jdbcCompliantTruncation=false</value>
-		</property>
-		<property name="user">
-			<value>root</value>
-		</property>
-		<property name="password">
-			<value>51auto_v4</value>
-		</property>
-		<!--连接池中保留的最小连接数。 -->
-		<property name="minPoolSize" value="10" />
-		<!--连接池中保留的最大连接数。Default: 15 -->
-		<property name="maxPoolSize" value="100" />
-		<!--最大空闲时间,1800秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
-		<property name="maxIdleTime" value="1800" />
-		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
-		<property name="acquireIncrement" value="3" />
-		<property name="maxStatements" value="1000" />
-		<property name="initialPoolSize" value="10" />
-		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
-		<property name="idleConnectionTestPeriod" value="60" />
-		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
-		<property name="acquireRetryAttempts" value="30" />
-		<property name="breakAfterAcquireFailure" value="true" />
-		<property name="testConnectionOnCheckout" value="false" />
-	</bean>
+	<import resource="applicationContext-dataSource.xml"/>
 	
-	 
 	 <!--    配置quartz任务调度   -->
-    <import resource="applicationContext-quartz.xml"/>
+<!--     <import resource="applicationContext-quartz.xml"/> -->
 	
 	<!--     memcache缓存配置    -->
 <!-- 	 <import resource="applicationContext-memcached.xml"/> -->
@@ -55,6 +24,10 @@
      <import resource="applicationContext-beans.xml"/>
 	 
 	 <!-- activeMQ配置 -->
-     <import resource="applicationContext-activemq.xml"/>
+<!--      <import resource="applicationContext-activemq.xml"/> -->
+     
+     <!-- rabbitmq配置 -->
+<!--      <context:property-placeholder location="rabbitmq-config.properties" /> -->
+     <import resource="applicationContext-rabbitmq.xml"/>
      
 </beans>
