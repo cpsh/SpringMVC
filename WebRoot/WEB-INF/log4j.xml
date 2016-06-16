@@ -167,6 +167,13 @@
         <appender-ref ref="error"/>
     </logger> 
     
+    
+    <logger name="com.cpsh.redis" additivity="false">     
+        <appender-ref ref="debug" /> 
+        <appender-ref ref="info"/> 
+        <appender-ref ref="warn"/> 
+        <appender-ref ref="error"/>
+    </logger>
   
    <!--通过<category></category>的定义,
         可以将各个包中的类日志输出到不同的日志文件中-->  

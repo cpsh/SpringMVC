@@ -12,22 +12,24 @@
 	xmlns:task="http://www.springframework.org/schema/task">
 
     <!-- 数据库链接池配置 -->
-	<import resource="applicationContext-dataSource.xml"/>
+	<import resource="spring-dataSource.xml"/>
 	
 	 <!--    配置quartz任务调度   -->
-<!--     <import resource="applicationContext-quartz.xml"/> -->
+<!--     <import resource="quartz.xml"/> -->
 	
 	<!--     memcache缓存配置    -->
-<!-- 	 <import resource="applicationContext-memcached.xml"/> -->
+<!-- 	 <import resource="spring-memcached.xml"/> -->
 	
 	<!--     Bean配置    -->
-     <import resource="applicationContext-beans.xml"/>
+     <import resource="spring-beans.xml"/>
 	 
 	 <!-- activeMQ配置 -->
-<!--      <import resource="applicationContext-activemq.xml"/> -->
+<!--      <import resource="spring-activemq.xml"/> -->
      
      <!-- rabbitmq配置 -->
 <!--      <context:property-placeholder location="rabbitmq-config.properties" /> -->
-     <import resource="applicationContext-rabbitmq.xml"/>
+     <import resource="spring-rabbitmq.xml"/>
+     
+     <import resource="spring-redis.xml" />
      
 </beans>
