@@ -8,7 +8,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 public class SpringProducer {
     public static void main(String[] args) throws Exception {
         AbstractApplicationContext context = new FileSystemXmlApplicationContext(
-                "/WebRoot/WEB-INF/applicationContext-amqp-rabbitmq.xml");
+                "/WebRoot/WEB-INF/applicationContext-rabbitmq.xml");
 //        RabbitTemplate template = context.getBean(RabbitTemplate.class);
         RabbitTemplate template = (RabbitTemplate)context.getBean("amqpTemplate");
         /*
