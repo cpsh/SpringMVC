@@ -18,7 +18,7 @@
     xmlns:task="http://www.springframework.org/schema/task">
     
 	<!-- Jedis链接池配置 -->
-	
+	<!-- 
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="testWhileIdle" value="true" />
 		<property name="minEvictableIdleTimeMillis" value="60000" />
@@ -27,8 +27,23 @@
 		<property name="maxTotal" value="8" />
 		<property name="maxIdle" value="8" />
 		<property name="minIdle" value="0" />
-	</bean>
+	</bean> -->
 
+    <!-- Jedis链接池配置，注意：Jedis版本建议升级到最新（当前最新版为2.7.3） -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="100" />
+        <property name="maxIdle" value="20" />
+        <property name="minIdle" value="10" />
+        <property name="blockWhenExhausted" value="true"></property>
+        <property name="maxWaitMillis" value="3000" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+        <property name="minEvictableIdleTimeMillis" value="60000" />
+        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+        <property name="numTestsPerEvictionRun" value="-1" />
+    </bean>
+        
 	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
 		<constructor-arg index="0" ref="jedisPoolConfig" />
 		<constructor-arg index="1">
@@ -41,7 +56,40 @@
 		</constructor-arg>
 	</bean>
 
-
+    <!-- JedisCluster -->
+    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+        <constructor-arg index="0">
+            <set>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg index="0" value="192.168.1.131" />
+                    <constructor-arg index="1" value="6379" type="int" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg index="0" value="192.168.1.131" />
+                    <constructor-arg index="1" value="6380" type="int" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg index="0" value="192.168.1.136" />
+                    <constructor-arg index="1" value="6379" type="int" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg index="0" value="192.168.1.136" />
+                    <constructor-arg index="1" value="6380" type="int" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg index="0" value="192.168.1.137" />
+                    <constructor-arg index="1" value="6379" type="int" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg index="0" value="192.168.1.137" />
+                    <constructor-arg index="1" value="6380" type="int" />
+                </bean>
+            </set>
+        </constructor-arg>
+        <constructor-arg index="1" value="2000" type="int"></constructor-arg>
+        <constructor-arg index="2" value="100" type="int"></constructor-arg>
+        <constructor-arg index="3" ref="jedisPoolConfig"></constructor-arg>
+    </bean>
 
 
 
